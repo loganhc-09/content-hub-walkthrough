@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Hub Flow</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #fafafa;
+    color: #1a1a1a;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .flow-page {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 32px 24px 48px;
+  }
+
+  /* Header */
+  .flow-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .flow-header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: #1a1a1a;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .flow-header p {
+    font-size: 0.82rem;
+    color: #999;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  /* Section label */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .section-label .num {
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .section-label .text {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    color: #bbb;
+  }
+
+  /* === SECTION 1: Sources === */
+  .sources-section {
+    margin-bottom: 24px;
+  }
+
+  .sources-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+
+  .source-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .source-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid;
+  }
+
+  .source-icon svg { width: 18px; height: 18px; }
+
+  .source-icon.c1 { border-color: rgba(201,169,98,0.4); background: rgba(201,169,98,0.08); color: #c9a962; }
+  .source-icon.c2 { border-color: rgba(122,158,159,0.4); background: rgba(122,158,159,0.08); color: #7a9e9f; }
+  .source-icon.c3 { border-color: rgba(155,138,165,0.4); background: rgba(155,138,165,0.08); color: #9b8aa5; }
+  .source-icon.c4 { border-color: rgba(165,137,122,0.4); background: rgba(165,137,122,0.08); color: #a5897a; }
+  .source-icon.c5 { border-color: rgba(143,163,135,0.4); background: rgba(143,163,135,0.08); color: #8fa387; }
+
+  .source-item span {
+    font-size: 0.58rem;
+    color: #aaa;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  /* Vertical connector */
+  .connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 0;
+  }
+
+  .conn-line {
+    width: 1.5px;
+    height: 24px;
+    background: #ddd;
+  }
+
+  .conn-chevron {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #ddd;
+  }
+
+  /* === SECTION 2: Email Hub === */
+  .hub-section {
+    margin-bottom: 0;
+  }
+
+  .hub-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    border: 1.5px solid rgba(201,169,98,0.3);
+    background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .hub-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(201,169,98,0.15), rgba(201,169,98,0.08));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .hub-icon svg { width: 20px; height: 20px; color: #c9a962; }
+
+  .hub-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+  }
+
+  .hub-sub {
+    font-size: 0.72rem;
+    color: #aaa;
+    font-weight: 400;
+  }
+
+  /* === SECTION 3: Pipeline Stages === */
+  .pipeline-section {
+    margin-bottom: 0;
+  }
+
+  .stage-card {
+    display: flex;
+    gap: 16px;
+    padding: 18px 20px;
+    border-radius: 14px;
+    background: white;
+    border: 1.5px solid #e8e8e8;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    margin-bottom: 0;
+  }
+
+  .stage-badge {
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .stage-badge svg { width: 22px; height: 22px; }
+
+  .stage-badge.s1 {
+    background: linear-gradient(135deg, rgba(201,169,98,0.18), rgba(201,169,98,0.08));
+    border: 1.5px solid rgba(201,169,98,0.35);
+    color: #b89744;
+  }
+  .stage-badge.s2 {
+    background: linear-gradient(135deg, rgba(155,138,165,0.18), rgba(155,138,165,0.08));
+    border: 1.5px solid rgba(155,138,165,0.35);
+    color: #8a76a0;
+  }
+  .stage-badge.s3 {
+    background: linear-gradient(135deg, rgba(122,158,159,0.18), rgba(122,158,159,0.08));
+    border: 1.5px solid rgba(122,158,159,0.35);
+    color: #5f8a8b;
+  }
+
+  .stage-info { flex: 1; }
+
+  .stage-name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 1px;
+  }
+
+  .stage-timing {
+    font-size: 0.62rem;
+    color: #bbb;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+
+  .stage-desc {
+    font-size: 0.75rem;
+    color: #999;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  /* Small connector between stages */
+  .stage-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px 0;
+  }
+
+  .stage-conn-line {
+    width: 1.5px;
+    height: 16px;
+    background: #e5e5e5;
+  }
+
+  .stage-conn-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #e5e5e5;
+  }
+
+  /* === SECTION 4: Output === */
+  .output-section {
+    margin-bottom: 32px;
+  }
+
+  .output-card {
+    display: flex;
+    gap: 14px;
+    padding: 18px 20px;
+    border-radius: 14px;
+    border: 1.5px solid rgba(122,158,159,0.35);
+    background: white;
+    box-shadow: 0 2px 8px rgba(122,158,159,0.08);
+  }
+
+  .output-badge {
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #7a9e9f, #9b8aa5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .output-badge svg { width: 22px; height: 22px; color: white; }
+
+  .output-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+  }
+
+  .output-sub {
+    font-size: 0.75rem;
+    color: #999;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  /* Preview bubble */
+  .preview-bubble {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: #f5f5f5;
+    border-radius: 10px;
+    font-size: 0.68rem;
+    color: #888;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .preview-bubble strong {
+    color: #666;
+    font-style: normal;
+  }
+
+  /* Footer */
+  .flow-footer {
+    text-align: center;
+    padding-top: 8px;
+  }
+
+  .flow-footer p {
+    font-size: 0.68rem;
+    color: #ccc;
+  }
+
+  .flow-footer a {
+    color: #aaa;
+    text-decoration: none;
+  }
+
+  .flow-footer span { color: #ddd; margin: 0 4px; }
+
+  /* Time callout */
+  .time-callout {
+    text-align: center;
+    margin-bottom: 36px;
+    padding: 14px 20px;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e8e8e8;
+  }
+
+  .time-callout .big {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #c9a962;
+    letter-spacing: -0.02em;
+  }
+
+  .time-callout .small {
+    font-size: 0.72rem;
+    color: #aaa;
+    font-weight: 400;
+    margin-top: 2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="flow-page">
+
+  <!-- Header -->
+  <div class="flow-header">
+    <h1>The AI Content Pipeline</h1>
+    <p>Forward anything → AI reads &amp; scores it → morning text</p>
+  </div>
+
+  <!-- Time callout -->
+  <div class="time-callout">
+    <div class="big">~30 min to set up</div>
+    <div class="small">Then it runs itself forever</div>
+  </div>
+
+  <!-- Section 1: Sources -->
+  <div class="sources-section">
+    <div class="section-label">
+      <div class="num" style="background: #c9a962;">1</div>
+      <div class="text">You find stuff worth saving</div>
+    </div>
+    <div class="sources-grid">
+      <div class="source-item">
+        <div class="source-icon c1">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"/></svg>
+        </div>
+        <span>Articles</span>
+      </div>
+      <div class="source-item">
+        <div class="source-icon c2">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"/></svg>
+        </div>
+        <span>Threads</span>
+      </div>
+      <div class="source-item">
+        <div class="source-icon c3">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+        </div>
+        <span>Emails</span>
+      </div>
+      <div class="source-item">
+        <div class="source-icon c4">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"/><path d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z"/></svg>
+        </div>
+        <span>Shots</span>
+      </div>
+      <div class="source-item">
+        <div class="source-icon c5">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342"/></svg>
+        </div>
+        <span>Papers</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connector -->
+  <div class="connector">
+    <div class="conn-line"></div>
+    <div class="conn-chevron"></div>
+  </div>
+
+  <!-- Section 2: Email Hub -->
+  <div class="hub-section">
+    <div class="section-label">
+      <div class="num" style="background: #c9a962;">2</div>
+      <div class="text">Forward it to one email</div>
+    </div>
+    <div class="hub-card">
+      <div class="hub-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+      </div>
+      <div>
+        <div class="hub-title">contenthub@gmail.com</div>
+        <div class="hub-sub">That's literally your only job</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connector -->
+  <div class="connector">
+    <div class="conn-line"></div>
+    <div class="conn-chevron"></div>
+  </div>
+
+  <!-- Section 3: AI Pipeline -->
+  <div class="pipeline-section">
+    <div class="section-label">
+      <div class="num" style="background: #9b8aa5;">3</div>
+      <div class="text">AI does the rest</div>
+    </div>
+
+    <!-- Fetch -->
+    <div class="stage-card">
+      <div class="stage-badge s1">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+      </div>
+      <div class="stage-info">
+        <div class="stage-name">Fetch</div>
+        <div class="stage-timing">Every 30 min</div>
+        <div class="stage-desc">Pulls your emails, extracts URLs &amp; images, saves everything as structured data</div>
+      </div>
+    </div>
+
+    <div class="stage-connector">
+      <div class="stage-conn-line"></div>
+      <div class="stage-conn-dot"></div>
+    </div>
+
+    <!-- Enrich -->
+    <div class="stage-card">
+      <div class="stage-badge s2">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"/></svg>
+      </div>
+      <div class="stage-info">
+        <div class="stage-name">Enrich</div>
+        <div class="stage-timing">3× daily</div>
+        <div class="stage-desc">Claude reads the full article, scores relevance 1–5, tags themes, writes a summary</div>
+      </div>
+    </div>
+
+    <div class="stage-connector">
+      <div class="stage-conn-line"></div>
+      <div class="stage-conn-dot"></div>
+    </div>
+
+    <!-- Digest -->
+    <div class="stage-card">
+      <div class="stage-badge s3">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg>
+      </div>
+      <div class="stage-info">
+        <div class="stage-name">Digest</div>
+        <div class="stage-timing">Daily 7am</div>
+        <div class="stage-desc">Groups everything by score, compiles a scannable morning briefing</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connector -->
+  <div class="connector">
+    <div class="conn-line"></div>
+    <div class="conn-chevron"></div>
+  </div>
+
+  <!-- Section 4: Output -->
+  <div class="output-section">
+    <div class="section-label">
+      <div class="num" style="background: #7a9e9f;">4</div>
+      <div class="text">Wake up to this</div>
+    </div>
+    <div class="output-card">
+      <div class="output-badge">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"/></svg>
+      </div>
+      <div>
+        <div class="output-title">☀️ Morning text on your phone</div>
+        <div class="output-sub">Scored, grouped, scannable — just pick what to read today</div>
+        <div class="preview-bubble">
+          <strong>⭐⭐⭐⭐⭐</strong> "How AI Is Reshaping Mid-Career Job Transitions" — Harvard Business Review<br>
+          <strong>⭐⭐⭐⭐</strong> "The Rise of Portfolio Careers" — Fast Company<br>
+          <strong>⭐⭐⭐</strong> 3 more items...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="flow-footer">
+    <p>
+      <a href="https://www.tiktok.com/@loganinthefuture">@loganinthefuture</a>
+      <span>·</span>
+      Built with Claude Code
+    </p>
+  </div>
+
+</div>
+
+</body>
+</html>
